@@ -83,11 +83,11 @@ impl JwtService {
         )
         .expect("Error occurred while decoding token");
 
-        if (token_data.claims.exp == 0) {
+        if token_data.claims.exp == 0 {
             return Ok(token_data.claims);
         }
 
-        if (token_data.claims.exp < get_current_time()) {
+        if token_data.claims.exp < get_current_time() {
             return Err(AuthError::TokenExpired);
         }
 
@@ -201,7 +201,7 @@ dn/RsYEONbwQSjIfMPkvxF+8HQ==
             .generate_token(example_user, Duration::from_secs(5))
             .expect("Token generated");
 
-        let result = service.verify_token::<SimpleUser>(&*token);
+        let result = service.verify_token::<SimpleUser>(&token);
 
         match result {
             Ok(token) => {}

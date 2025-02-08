@@ -1,6 +1,5 @@
 use std::sync::Arc;
 use actix_web::{get, post, web, HttpResponse, Responder, Scope};
-use actix_web::dev::HttpServiceFactory;
 use crate::auth::service::auth::{AuthService, LoginRequest};
 
 #[post("/login")]
