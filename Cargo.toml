@@ -1,0 +1,22 @@
+[package]
+name = "panel"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+members = [".", "migration"]
+
+[dependencies]
+migration = { path = "migration" }
+actix-web = "4.9.0"
+tokio = { version = "1.43.0", features = ["full"] }
+serde = { version = "1.0.217", features = ["derive"] }
+validator = { version = "0.20.0", features = ["derive"] }
+serde_json = "1.0.138"
+tokio-macros = "2.5.0"
+thiserror = "2.0.11"
+sea-orm = { version = "1.1.4", features = ["sqlx-mysql", "sqlx-postgres", "sqlx-sqlite", "runtime-tokio", "macros"] }
+async-trait = "0.1.86"
+env_logger = "0.11.6"
+log = "0.4.25"
+jsonwebtoken = "9.3.1"
