@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
     set_var("RUST_LOG", "debug");
     env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
 
-    let db: DatabaseConnection = Database::connect("postgres://panel:1234@localhost/panel?currentSchema=my_schema")
+    let db: DatabaseConnection = Database::connect("mysql://root@localhost/panel")
         .await
         .expect("database connection");
 
