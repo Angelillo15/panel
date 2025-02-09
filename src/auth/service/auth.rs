@@ -1,28 +1,9 @@
-use serde::{Deserialize, Serialize};
-use validator::Validate;
+use async_trait::async_trait;
 use crate::auth::error::AuthError;
-#[derive(Debug, Serialize, Deserialize, Validate)]
-pub struct LoginRequest {
-    #[validate(length(min = 1, max = 150))]
-    pub username: String,
-    #[validate(length(min = 1, max = 30))]
-    pub password: String,
-    pub remember_me: bool,
-}
-
-#[derive(Debug, Serialize, Deserialize, Validate)]
-pub struct RegisterRequest {
-    #[validate(length(min = 1, max = 30))]
-    pub username: String,
-    #[validate(email)]
-    pub email: String,
-    #[validate(length(min = 1, max = 30))]
-    pub password: String,
-}
-
-pub struct RenewRequest {
-    pub token: String,
-}
+use crate::auth::request::login::LoginRequest;
+use crate::auth::request::register::RegisterRequest;
+use crate::auth::request::renew::RenewRequest;
+use serde::{Deserialize, Serialize};
 
 /// # Token Response
 #[derive(Debug, Serialize, Deserialize)]
@@ -40,10 +21,10 @@ pub struct TokenResponse {
     pub short_token: String,
 }
 
-
-#[async_trait::async_trait]
+#[async_trait]
 pub trait AuthService: Send + Sync {
     async fn login(&self, login_request: LoginRequest) -> Result<TokenResponse, AuthError>;
-    async fn register(&self, register_request: RegisterRequest) -> Result<TokenResponse, AuthError>;
+    async fn register(&self, register_request: RegisterRequest)
+        -> Result<TokenResponse, AuthError>;
     async fn renew(&self, renew_request: RenewRequest) -> Result<TokenResponse, AuthError>;
 }
