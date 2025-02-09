@@ -2,6 +2,7 @@ use serde::{Serialize, Serializer};
 use serde::ser::SerializeMap;
 use strum::{AsRefStr, EnumString};
 use thiserror::Error;
+use crate::util::text_util::TextUtil;
 
 #[derive(Debug, Error, AsRefStr, EnumString)]
 pub enum AuthError {
@@ -27,7 +28,7 @@ pub enum AuthError {
 
 impl AuthError {
   pub fn i18n_key(&self) -> String {
-    format!("auth.{}", self.as_ref().to_lowercase())
+    TextUtil::i18n_key_with_prefix("auth", self)
   }
 }
 
