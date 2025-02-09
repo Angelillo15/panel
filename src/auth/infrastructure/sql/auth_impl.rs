@@ -1,7 +1,10 @@
 use async_trait::async_trait;
 use sea_orm::{ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter};
 use crate::auth::error::AuthError;
-use crate::auth::service::auth::{AuthService, LoginRequest, RegisterRequest, RenewRequest, TokenResponse};
+use crate::auth::request::login::LoginRequest;
+use crate::auth::request::register::RegisterRequest;
+use crate::auth::request::renew::RenewRequest;
+use crate::auth::service::auth::{AuthService, TokenResponse};
 use crate::entity::user as User;
 
 pub struct  SQLImpl {
@@ -22,11 +25,17 @@ impl AuthService for SQLImpl {
             .one(&self.db)
             .await.unwrap();
 
-
-        Ok(TokenResponse {
-            long_token: None,
-            short_token: "".to_string(),
-        })
+        match user {
+            Some(user) => {
+                Ok(TokenResponse {
+                    long_token: Some("test".to_string()),
+                    short_token: "test".to_string(),
+                })
+            }
+            None => {
+                Err(AuthError::InvalidUsernameOrPassword)
+            }
+        }
     }
 
     async fn register(&self, register_request: RegisterRequest) -> Result<TokenResponse, AuthError> {
