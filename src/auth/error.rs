@@ -12,6 +12,10 @@ pub enum AuthError {
   InvalidEmail,
   #[error("Invalid password, check the password requirements")]
   InvalidPassword,
+  #[error("The email is already taken")]
+  EmailAlreadyInUse,
+  #[error("The email already taken")]
+  UsernameAlreadyInUse,
   #[error("Invalid captcha")]
   InvalidCaptcha,
   #[error("Invalid token")]
@@ -24,6 +28,8 @@ pub enum AuthError {
   TokenNotValid,
   #[error("No private key was provided")]
   NoPrivateKey,
+  #[error("Internal error during authentication")]
+  InternalError,
 }
 
 impl AuthError {
