@@ -5,14 +5,12 @@ pub struct Migration;
 
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
-    // Método para aplicar la migración: crea las tablas
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        // Creación de la tabla "users" con campo UUID
         manager
             .create_table(
                 Table::create()
                     .table(User::Table)
-                    .if_not_exists() // Only will be created if not exists yet
+                    .if_not_exists()
                     .col(
                         ColumnDef::new(User::Id)
                             .integer()
@@ -20,18 +18,13 @@ impl MigrationTrait for Migration {
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(
-                        ColumnDef::new(User::Uuid)
-                            .uuid()
-                            .not_null()
-                            .unique_key()
-                    )
+                    .col(ColumnDef::new(User::Uuid).uuid().not_null().unique_key())
                     .col(ColumnDef::new(User::Username).string().not_null())
                     .col(ColumnDef::new(User::Email).string().not_null().unique_key())
                     .col(ColumnDef::new(User::Password).string().not_null())
                     .col(
                         ColumnDef::new(User::CreatedAt)
-                            .timestamp()
+                            .date_time()
                             .default(Expr::current_timestamp())
                             .not_null(),
                     )
@@ -52,7 +45,12 @@ impl MigrationTrait for Migration {
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Session::UserId).integer().not_null())
-                    .col(ColumnDef::new(Session::Token).string().not_null().unique_key())
+                    .col(
+                        ColumnDef::new(Session::Token)
+                            .string()
+                            .not_null()
+                            .unique_key(),
+                    )
                     .col(
                         ColumnDef::new(Session::CreatedAt)
                             .timestamp()
@@ -60,7 +58,6 @@ impl MigrationTrait for Migration {
                             .not_null(),
                     )
                     .col(ColumnDef::new(Session::ExpiresAt).timestamp().not_null())
-                    // Llave foránea que relaciona sessions con users
                     .foreign_key(
                         ForeignKey::create()
                             .name("fk_session_user_id")
@@ -108,7 +105,12 @@ impl MigrationTrait for Migration {
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Permission::Name).string().not_null().unique_key())
+                    .col(
+                        ColumnDef::new(Permission::Name)
+                            .string()
+                            .not_null()
+                            .unique_key(),
+                    )
                     .col(ColumnDef::new(Permission::Description).string().null())
                     .col(
                         ColumnDef::new(Permission::CreatedAt)
@@ -125,11 +127,7 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table(RolePermission::Table)
                     .if_not_exists()
-                    .col(
-                        ColumnDef::new(RolePermission::RoleId)
-                            .integer()
-                            .not_null(),
-                    )
+                    .col(ColumnDef::new(RolePermission::RoleId).integer().not_null())
                     .col(
                         ColumnDef::new(RolePermission::PermissionId)
                             .integer()
@@ -162,7 +160,6 @@ impl MigrationTrait for Migration {
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        // Se elimina primero la tabla intermedia para evitar conflictos con las llaves foráneas
         manager
             .drop_table(Table::drop().table(RolePermission::Table).to_owned())
             .await?;
