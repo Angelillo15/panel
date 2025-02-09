@@ -23,8 +23,8 @@ pub struct TokenResponse {
 
 #[async_trait]
 pub trait AuthService: Send + Sync {
-    async fn login(&self, login_request: LoginRequest) -> Result<TokenResponse, AuthError>;
-    async fn register(&self, register_request: RegisterRequest)
+    async fn login(&self, login_request: &LoginRequest) -> Result<TokenResponse, AuthError>;
+    async fn register(&self, register_request: &RegisterRequest)
         -> Result<TokenResponse, AuthError>;
-    async fn renew(&self, renew_request: RenewRequest) -> Result<TokenResponse, AuthError>;
+    async fn renew(&self, renew_request: &RenewRequest) -> Result<TokenResponse, AuthError>;
 }

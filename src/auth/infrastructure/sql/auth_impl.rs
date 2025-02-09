@@ -19,7 +19,7 @@ impl SQLImpl {
 
 #[async_trait]
 impl AuthService for SQLImpl {
-    async fn login(&self, login_request: LoginRequest) -> Result<TokenResponse, AuthError> {
+    async fn login(&self, login_request: &LoginRequest) -> Result<TokenResponse, AuthError> {
         let user: Option<User::Model> = User::Entity::find()
             .filter(User::Column::Username.eq(login_request.username.clone()).or(User::Column::Email.eq(login_request.username.clone())))
             .one(&self.db)
@@ -38,11 +38,11 @@ impl AuthService for SQLImpl {
         }
     }
 
-    async fn register(&self, register_request: RegisterRequest) -> Result<TokenResponse, AuthError> {
+    async fn register(&self, register_request: &RegisterRequest) -> Result<TokenResponse, AuthError> {
         todo!()
     }
 
-    async fn renew(&self, renew_request: RenewRequest) -> Result<TokenResponse, AuthError> {
+    async fn renew(&self, renew_request: &RenewRequest) -> Result<TokenResponse, AuthError> {
         todo!()
     }
 }
