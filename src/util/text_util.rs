@@ -1,4 +1,4 @@
-struct TextUtil;
+pub struct TextUtil;
 
 impl TextUtil {
     pub fn i18n_key<T>(enum_key: T) -> String
@@ -9,12 +9,12 @@ impl TextUtil {
         let mut builder = String::new();
 
         text.chars().for_each(|c| {
-            if (!c.is_uppercase()) {
+            if !c.is_uppercase() {
                 builder.push(c);
                 return;
             }
 
-            if (!builder.is_empty()) {
+            if !builder.is_empty() {
                 builder.push('_')
             }
 
