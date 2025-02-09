@@ -26,3 +26,5 @@ futures = "0.3.31"
 clap = { version = "4.5.28", features = ["derive", "env"] }
 directories = "6.0.0"
 argon2 = "0.5.3"
+uuid = { version = "1.13.1", features = ["v4"] }
+chrono = "0.4.39"

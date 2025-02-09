@@ -751,8 +751,10 @@ checksum = "7e36cc9d416881d2e24f9a963be5fb1cd90966419ac844274161d10488b3e825"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
+ "js-sys",
  "num-traits",
  "serde",
+ "wasm-bindgen",
  "windows-targets 0.52.6",
 ]
 
@@ -2098,6 +2100,7 @@ dependencies = [
  "actix-web",
  "argon2",
  "async-trait",
+ "chrono",
  "clap",
  "config",
  "directories",
@@ -2113,6 +2116,7 @@ dependencies = [
  "thiserror 2.0.11",
  "tokio",
  "tokio-macros",
+ "uuid",
  "validator",
 ]
 
@@ -3715,6 +3719,7 @@ version = "1.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ced87ca4be083373936a67f8de945faa23b6b42384bd5b64434850802c6dccd0"
 dependencies = [
+ "getrandom 0.3.1",
  "serde",
 ]
 
