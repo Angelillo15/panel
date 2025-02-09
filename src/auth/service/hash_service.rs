@@ -3,7 +3,7 @@ use argon2::{password_hash, Argon2, PasswordHash, PasswordHasher, PasswordVerifi
 use std::error::Error;
 use std::sync::{Arc, Mutex};
 
-struct HashService {
+pub struct HashService {
     salt: Arc<Mutex<SaltString>>,
     argon2: Argon2<'static>,
 }
