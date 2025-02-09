@@ -1,2 +1,3 @@
 pub mod auth;
-mod jwt_service;
+pub mod jwt_service;
+pub mod hash_service;
